@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import com.sstudio.kadefootballleague.data.League
+import com.sstudio.kadefootballleague.ui.detail.LeagueDetailActivity
+import com.sstudio.kadefootballleague.ui.home.LeagueAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
@@ -23,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
             recyclerView {
                 lparams(matchParent, matchParent)
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = GridLayoutManager(context, 2)
                 adapter = LeagueAdapter(dataitem) {
                     startActivity<LeagueDetailActivity>(LeagueDetailActivity.POSITIONEXTRA to it)
                 }

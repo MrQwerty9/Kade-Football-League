@@ -1,4 +1,4 @@
-package com.sstudio.kadefootballleague
+package com.sstudio.kadefootballleague.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

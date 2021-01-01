@@ -1,4 +1,4 @@
-package com.sstudio.kadefootballleague
+package com.sstudio.kadefootballleague.ui.home
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.sstudio.kadefootballleague.data.League
 import org.jetbrains.anko.AnkoContext
 
 class LeagueAdapter(var list : MutableList<League>, var listener : (League) -> Unit) : RecyclerView.Adapter<LeagueAdapter.LeagueViewHolder>() {
