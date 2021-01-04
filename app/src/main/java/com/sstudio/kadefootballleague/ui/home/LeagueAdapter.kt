@@ -1,36 +1,54 @@
 package com.sstudio.kadefootballleague.ui.home
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sstudio.kadefootballleague.data.League
-import org.jetbrains.anko.AnkoContext
+import com.bumptech.glide.request.RequestOptions
+import com.sstudio.kadefootballleague.BuildConfig
+import com.sstudio.kadefootballleague.R
+import com.sstudio.kadefootballleague.model.League
+import kotlinx.android.synthetic.main.item_league.view.*
 
-class LeagueAdapter(var list : MutableList<League>, var listener : (League) -> Unit) : RecyclerView.Adapter<LeagueAdapter.LeagueViewHolder>() {
+class LeagueAdapter : RecyclerView.Adapter<LeagueAdapter.LeagueViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeagueViewHolder {
-        return LeagueViewHolder(LeagueUI().createView(AnkoContext.create(parent.context, parent)))
+    private var leagues : ArrayList<League> = ArrayList()
+    var onItemClick: ((League) -> Unit)? = null
+
+    fun setLeagues(league: List<League>){
+        this.leagues.clear()
+        this.leagues.addAll(league)
+        notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeagueViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_league, parent, false)
+        return LeagueViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = leagues.size
 
     override fun onBindViewHolder(holder: LeagueViewHolder, position: Int) {
-        holder.bindItem(list[position], listener)
+        holder.bindItem(leagues[position])
     }
 
     inner class LeagueViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
-        private val logo = itemView.findViewById<ImageView>(LeagueUI.photo)
-        private val name = itemView.findViewById<TextView>(LeagueUI.nameLeague)
+        fun bindItem (items : League){
+            with(itemView) {
+                tv_league_name.text = items.strLeague
 
-        fun bindItem (items : League, listener : (League) -> Unit){
-            name.text = items.name
-            Glide.with(itemView.context).load(items.photo).into(logo)
-            itemView.setOnClickListener {
-                listener(items)
+                Glide.with(itemView.context)
+                    .load(BuildConfig.IMAGE_URL + "league/badge/small/" + items.badgePath)
+                    .apply(
+                        RequestOptions.placeholderOf(R.drawable.ic_loading)
+                            .error(R.drawable.ic_error)
+                    )
+                    .into(iv_league_list)
+                itemView.setOnClickListener {
+                    onItemClick?.invoke(items)
+                }
             }
         }
     }
