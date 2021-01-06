@@ -23,18 +23,19 @@ class MatchDetailsActivity : AppCompatActivity(), MatchDetailView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_details)
 
+        val intent = intent.getParcelableExtra<Match>(EXTRA_MATCH)
+
+        toolbar.title = intent?.strEvent
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.elevation = 0f
 
 
-        val intent = intent.getParcelableExtra<Match>(EXTRA_MATCH)
-        intent?.let { showMatchDetail(it) }
-
         matchDetailPresenter = MatchDetailPresenter(this, ApiConfig.getApiService())
         intent?.idHomeTeam?.let { matchDetailPresenter.getTeamHome(it) }
         intent?.idAwayTeam?.let { matchDetailPresenter.getTeamAway(it) }
-        toolbar.title = intent?.strEvent
+
+        intent?.let { showMatchDetail(it) }
     }
 
     private fun showMatchDetail(data: Match) {
@@ -47,6 +48,8 @@ class MatchDetailsActivity : AppCompatActivity(), MatchDetailView {
             .into(iv_match_detail)
         tv_league_name.text = data.strLeague + ", Ronde " + data.intRound
         tv_venue_name.text = data.strVenue + ", " + data.strCountry
+        tv_match_date.text = matchDetailPresenter.changeLocalDate(data.dateEvent, data.strTime)
+        tv_match_time.text = matchDetailPresenter.changeLocalTime(data.dateEvent, data.strTime)
         tv_club_home.text = data.strHomeTeam
         tv_club_away.text = data.strAwayTeam
         tv_score_home.text = data.intHomeScore ?: "-"

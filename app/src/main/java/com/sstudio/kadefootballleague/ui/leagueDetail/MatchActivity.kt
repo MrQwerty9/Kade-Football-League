@@ -2,6 +2,7 @@ package com.sstudio.kadefootballleague.ui.leagueDetail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -13,7 +14,7 @@ import com.sstudio.kadefootballleague.model.League
 import com.sstudio.kadefootballleague.model.LeagueDetail
 import kotlinx.android.synthetic.main.activity_match.*
 import kotlinx.android.synthetic.main.content_detail_match.*
-import org.jetbrains.anko.toast
+
 
 class MatchActivity : AppCompatActivity(), LeagueDetailView {
     companion object {
@@ -22,7 +23,7 @@ class MatchActivity : AppCompatActivity(), LeagueDetailView {
     }
 
     private lateinit var leagueDetailPresenter: LeagueDetailPresenter
-
+    private var mIntent: League? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +33,16 @@ class MatchActivity : AppCompatActivity(), LeagueDetailView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.elevation = 0f
 
-        val intent = intent.getParcelableExtra<League>(EXTRA_LEAGUE)
-        idLeague = intent?.idLeague
+        mIntent = intent.getParcelableExtra(EXTRA_LEAGUE)
+        if (mIntent == null){
+            mIntent = SavedLeagueDetail.mIntent
+        }
+        SavedLeagueDetail.mIntent = mIntent
+
+        idLeague = mIntent?.idLeague
         leagueDetailPresenter = LeagueDetailPresenter(this, ApiConfig.getApiService())
         idLeague?.let { leagueDetailPresenter.getLeagueDetail(it) }
-        intent?.strLeague?.let { setToolbarTitle(it) }
+        mIntent?.strLeague?.let { setToolbarTitle(it) }
 
         val pagerAdapter =  SectionsPagerAdapter(this, supportFragmentManager)
         with(pager_container_match){
@@ -47,11 +53,21 @@ class MatchActivity : AppCompatActivity(), LeagueDetailView {
         swipe_layout.setOnRefreshListener {
 //            recreate()
             finish()
-            startActivity(getIntent())
+            startActivity(intent)
             overridePendingTransition(0, 0)
         }
-
     }
+
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putParcelable(EXTRA_LEAGUE, mIntent)
+//    }
+//
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        mIntent = savedInstanceState.getParcelable(EXTRA_LEAGUE)
+//    }
+
 
     override fun showLeagueDetail(data: LeagueDetail) {
         progress_bar.visibility = View.GONE
@@ -65,7 +81,7 @@ class MatchActivity : AppCompatActivity(), LeagueDetailView {
     }
 
     override fun failureLeagueDetail(message: String) {
-        toast("Error $message")
+        Toast.makeText(this, "Error $message", Toast.LENGTH_SHORT).show()
     }
 
     private fun setToolbarTitle(title: String) {

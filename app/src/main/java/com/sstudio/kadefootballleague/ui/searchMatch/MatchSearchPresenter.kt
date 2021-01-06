@@ -3,6 +3,7 @@ package com.sstudio.kadefootballleague.ui.searchMatch
 import com.sstudio.kadefootballleague.BuildConfig
 import com.sstudio.kadefootballleague.data.remote.api.ApiService
 import com.sstudio.kadefootballleague.data.remote.response.MatchSearchResponse
+import com.sstudio.kadefootballleague.model.Match
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +18,7 @@ class MatchSearchPresenter(private val view: MatchSearchView, private val apiSer
                     response: Response<MatchSearchResponse>
                 ) {
                     response.body()?.event?.let {
-                        view.showMatchFound(it)
+                        view.showMatchFound(filterSoccer(it))
                     }
                 }
 
@@ -26,5 +27,15 @@ class MatchSearchPresenter(private val view: MatchSearchView, private val apiSer
                 }
 
             })
+    }
+
+    private fun filterSoccer(match: List<Match>): List<Match>{
+        val soccerMatch = ArrayList<Match>()
+        for (data in match){
+            if (data.strSport == "Soccer"){
+                soccerMatch.add(data)
+            }
+        }
+        return soccerMatch
     }
 }

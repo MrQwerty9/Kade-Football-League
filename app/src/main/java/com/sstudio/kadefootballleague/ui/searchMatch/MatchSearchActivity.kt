@@ -2,11 +2,13 @@ package com.sstudio.kadefootballleague.ui.searchMatch
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +16,8 @@ import com.sstudio.kadefootballleague.R
 import com.sstudio.kadefootballleague.data.remote.api.ApiConfig
 import com.sstudio.kadefootballleague.model.Match
 import com.sstudio.kadefootballleague.ui.leagueDetail.MatchAdapter
+import com.sstudio.kadefootballleague.ui.matchDetails.MatchDetailsActivity
 import kotlinx.android.synthetic.main.activity_match_search.*
-import org.jetbrains.anko.toast
 
 class MatchSearchActivity : AppCompatActivity(), MatchSearchView {
 
@@ -39,11 +41,17 @@ class MatchSearchActivity : AppCompatActivity(), MatchSearchView {
             setHasFixedSize(true)
             adapter = matchAdapter
         }
+        matchAdapter.onItemClick = {
+            val intent = Intent(this, MatchDetailsActivity::class.java)
+            intent.putExtra(MatchDetailsActivity.EXTRA_MATCH, it)
+            startActivity(intent)
+        }
+        handler = Handler(Looper.getMainLooper())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.search_activity_menu, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager?
         if (searchManager != null) {
             val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
@@ -60,7 +68,6 @@ class MatchSearchActivity : AppCompatActivity(), MatchSearchView {
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    handler = Handler(Looper.getMainLooper())
                     if (newText.isNotEmpty()) {
                         progress_bar.visibility = View.VISIBLE
                         handler.removeCallbacksAndMessages(null)
@@ -81,6 +88,6 @@ class MatchSearchActivity : AppCompatActivity(), MatchSearchView {
     }
 
     override fun failureResponse(message: String) {
-        toast("Error $message")
+        Toast.makeText(this, "Error $message", Toast.LENGTH_SHORT).show()
     }
 }

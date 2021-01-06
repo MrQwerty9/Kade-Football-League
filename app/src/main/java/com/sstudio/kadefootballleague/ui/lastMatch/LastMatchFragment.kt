@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sstudio.kadefootballleague.R
@@ -14,16 +15,11 @@ import com.sstudio.kadefootballleague.ui.leagueDetail.MatchActivity
 import com.sstudio.kadefootballleague.ui.leagueDetail.MatchAdapter
 import com.sstudio.kadefootballleague.ui.matchDetails.MatchDetailsActivity
 import kotlinx.android.synthetic.main.fragment_last_match.*
-import org.jetbrains.anko.support.v4.toast
 
 class LastMatchFragment : Fragment(), LastMatchView {
 
-    companion object{
-        val EXTRA_LEAGUEID = "id_league"
-    }
     private lateinit var lastMatchPresenter: LastMatchPresenter
     private lateinit var matchAdapter: MatchAdapter
-    private var idLeague: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +42,7 @@ class LastMatchFragment : Fragment(), LastMatchView {
         }
 
         matchAdapter.onItemClick = {
-            val intent = Intent(context, MatchDetailsActivity::class.java)
+            val intent = Intent(activity, MatchDetailsActivity::class.java)
             intent.putExtra(MatchDetailsActivity.EXTRA_MATCH, it)
             startActivity(intent)
         }
@@ -57,6 +53,6 @@ class LastMatchFragment : Fragment(), LastMatchView {
     }
 
     override fun failureLastMatch(message: String) {
-        toast("Error $message")
+        Toast.makeText(context, "Error $message", Toast.LENGTH_SHORT).show()
     }
 }

@@ -76,7 +76,7 @@ class MatchAdapter : RecyclerView.Adapter<MatchAdapter.LeagueViewHolder>() {
             return time ?: ""
         }
         val dfZone = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z")
-        val timeFormat = SimpleDateFormat.getTimeInstance(2, Locale("id"))
+        val timeFormat = SimpleDateFormat.getTimeInstance(3, Locale("id"))
         val dZulu: Date = dfZone.parse("$date $time UTC")
 
         dfZone.timeZone = TimeZone.getDefault()

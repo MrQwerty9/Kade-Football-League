@@ -8,6 +8,7 @@ data class Match(
     val idEvent: String?,
     val strEvent: String?,
     val strEventAlternate: String?,
+    val strSport: String?,
     val idLeague: String?,
     val strLeague: String?,
     val strSeason: String?,
