@@ -8,7 +8,6 @@
     <string name="tab_LastMatch">Last Match</string>
     <string name="tab_NextMatch">Next Match</string>
     <string name="search">Cari Pertandingan</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="tab_league">League</string>
     <string name="tab_favorite">Favorite</string>
 </resources>

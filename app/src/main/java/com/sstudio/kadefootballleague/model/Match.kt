@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Match(
-    val idEvent: String?,
+    val idEvent: String,
     val strEvent: String?,
     val strEventAlternate: String?,
     val strSport: String?,

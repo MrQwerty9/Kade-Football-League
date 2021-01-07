@@ -26,7 +26,8 @@
             android:layout_height="250dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:ignore="ContentDescription"/>
 
         <TextView
             android:id="@+id/tv_league_name"
@@ -59,7 +60,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="ContentDescription"/>
 
             <TextView
                 android:id="@+id/tv_club_home"
@@ -134,7 +136,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="ContentDescription"/>
 
             <TextView
                 android:id="@+id/tv_club_away"
@@ -217,6 +220,18 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/tv_venue_name_label"
             app:layout_constraintTop_toBottomOf="@+id/tv_venue_name_label" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_baseline_star_border"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_match_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_match_detail"
+            tools:ignore="ContentDescription"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

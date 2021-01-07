@@ -1,5 +1,6 @@
 package com.sstudio.kadefootballleague.ui.matchDetails
 
+import com.sstudio.kadefootballleague.model.Match
 import com.sstudio.kadefootballleague.model.Team
 
 interface MatchDetailView {
@@ -7,4 +8,6 @@ interface MatchDetailView {
     fun failureClubHome(message: String)
     fun showClubAway(data: Team)
     fun failureClubAway(message: String)
+
+    fun showFavoriteMatch(favorite: List<Match>)
 }

@@ -51,22 +51,12 @@ class MatchActivity : AppCompatActivity(), LeagueDetailView {
         }
         tab_layout_match.setupWithViewPager(pager_container_match)
         swipe_layout.setOnRefreshListener {
-//            recreate()
+
             finish()
             startActivity(intent)
             overridePendingTransition(0, 0)
         }
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable(EXTRA_LEAGUE, mIntent)
-//    }
-//
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        mIntent = savedInstanceState.getParcelable(EXTRA_LEAGUE)
-//    }
 
 
     override fun showLeagueDetail(data: LeagueDetail) {

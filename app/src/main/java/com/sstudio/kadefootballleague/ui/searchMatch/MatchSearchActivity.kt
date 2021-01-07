@@ -71,7 +71,7 @@ class MatchSearchActivity : AppCompatActivity(), MatchSearchView {
                     if (newText.isNotEmpty()) {
                         progress_bar.visibility = View.VISIBLE
                         handler.removeCallbacksAndMessages(null)
-                        handler.postDelayed(Runnable {
+                        handler.postDelayed({
                             matchSearchPresenter.getMatchSearch(newText)
                         }, 300)
                     }

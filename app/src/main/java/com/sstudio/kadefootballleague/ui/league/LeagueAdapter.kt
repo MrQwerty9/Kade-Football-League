@@ -1,4 +1,4 @@
-package com.sstudio.kadefootballleague.ui.home
+package com.sstudio.kadefootballleague.ui.league
 
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +46,7 @@ class LeagueAdapter : RecyclerView.Adapter<LeagueAdapter.LeagueViewHolder>() {
                             .error(R.drawable.ic_error)
                     )
                     .into(iv_league_list)
-                itemView.setOnClickListener {
+                setOnClickListener {
                     onItemClick?.invoke(items)
                 }
             }

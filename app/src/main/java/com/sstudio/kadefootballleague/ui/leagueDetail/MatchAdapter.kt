@@ -63,7 +63,7 @@ class MatchAdapter : RecyclerView.Adapter<MatchAdapter.LeagueViewHolder>() {
         if (date == null || time == null){
             return date ?: ""
         }
-        val dfZone = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z")
+        val dfZone = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z", Locale.getDefault())
         val dateFormat = SimpleDateFormat.getDateInstance(0, Locale("id"))
         val dZulu: Date = dfZone.parse("$date $time UTC")
 
@@ -75,7 +75,7 @@ class MatchAdapter : RecyclerView.Adapter<MatchAdapter.LeagueViewHolder>() {
         if (date == null || time == null){
             return time ?: ""
         }
-        val dfZone = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z")
+        val dfZone = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z", Locale.getDefault())
         val timeFormat = SimpleDateFormat.getTimeInstance(3, Locale("id"))
         val dZulu: Date = dfZone.parse("$date $time UTC")
 
